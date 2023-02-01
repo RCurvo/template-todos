@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 
 import { Header } from '../components/Header';
 import { Task, TasksList } from '../components/TasksList';
@@ -9,15 +9,30 @@ export function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   function handleAddTask(newTaskTitle: string) {
-    //TODO - add new task
+    const newTask: Task = {
+done: false,
+id: new Date().getTime(),
+title: newTaskTitle
+    }
+    setTasks((state) => [...state, newTask])
   }
 
   function handleToggleTaskDone(id: number) {
-    //TODO - toggle task done if exists
+const updatedTasks = tasks.map((item) => {
+  if (item.id === id){
+   item.done = !item.done
+   return item
+}
+return item
+  })
+  setTasks(updatedTasks)
   }
 
+
   function handleRemoveTask(id: number) {
-    //TODO - remove task from state
+    const newArray = tasks.filter((item) =>  item.id !== id
+    )
+    setTasks(newArray)
   }
 
   return (
